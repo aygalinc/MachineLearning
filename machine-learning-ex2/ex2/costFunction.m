@@ -20,12 +20,23 @@ grad = zeros(size(theta));
 % Note: grad should have the same dimensions as theta
 %
 
+H = sigmoid( theta' * X' )';
 
+% Compute cost function
 
+% Je comprends pas pourquoi cette formule ne marche pas ???
+%J = 1/m * sum( (-y' * log(H)) - ((1 - y') * log(H)));
 
+templog(:,1) = log(sigmoid(X*theta));
+templog(:,2) = log(1-(sigmoid(X*theta)));
+tempy(:,1) = y;
+tempy(:,2) = 1-y;
+temp = templog.*tempy;
+J = (1/m)*(-sum(temp(:,1))-sum(temp(:,2)));
 
-
-
+% Compute gradient 
+grad = 1/m *( H - y )' * X;
+grad = grad';
 
 % =============================================================
 
